@@ -84,7 +84,7 @@ classdef Eneeb_client < handle
             
             obj.message = char(obj.message);
             
-            fprintf(1, obj.message)
+            fprintf(1, '%s \n',obj.message)
             
         end
     end

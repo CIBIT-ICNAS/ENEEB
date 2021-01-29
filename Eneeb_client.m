@@ -56,6 +56,7 @@ classdef Eneeb_client < handle
                     
                 catch
                     if ~isempty(obj.input_socket)
+                        
                         obj.input_socket.close;
                     end
                     % pause before retrying
@@ -67,24 +68,34 @@ classdef Eneeb_client < handle
         function close(obj)
             % close and cleanup.
             obj.input_socket.close;
+            
+            fprintf(1, '[CLIENT: ] Client closed connection.\n')
        
         end
-        function readmessage(obj)
+        
+        function bytearrayread=readmessage(obj, datapoint_size)
             % read data from the socket - wait a short time first
 
+            
+            while (obj.input_stream.available<datapoint_size)
+                
+                   
+                pause(.1);
+            end
+            
             bytes_available = obj.input_stream.available;
+            fprintf(1, '[CLIENT: ]  %d bytes available \n', bytes_available);
+            obj.message = zeros(1, datapoint_size, 'int8');
             
-            fprintf(1, 'Reading %d bytes\n', bytes_available);
-            
-            obj.message = zeros(1, bytes_available, 'uint8');
-            
-            for i = 1:bytes_available
+            for i = 1:datapoint_size%bytes_available
                 obj.message(i) = obj.data_input_stream.readByte;
             end
             
-            obj.message = char(obj.message);
+            bytearrayread=obj.message;
             
-            fprintf(1, '%s \n',obj.message)
+            % obj.message=char(obj.message);
+            
+            fprintf(1, '[CLIENT: ] done. \n')
             
         end
     end

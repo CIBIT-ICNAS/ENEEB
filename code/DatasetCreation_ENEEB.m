@@ -1,9 +1,11 @@
 %% This scrip is designed to change stim info 
 clear all; clc;
+% Change path folder and subfolders of Nirs Toolbox
 addpath(genpath('C:\Users\User\Documents\GitHub\nirs-toolbox'))
 
 %% Load fNIRS data
-rootDir = fullfile(pwd, 'data','TappingLeftRight');
+% Define path for data folder
+rootDir = 'C:\Users\User\Documents\GitHub\ENEEB\data\TappingLeftRight';
 raw = nirs.io.loadDirectory(fullfile(rootDir), {'subjects', 'runs'});
 
 job = nirs.modules.RenameStims();

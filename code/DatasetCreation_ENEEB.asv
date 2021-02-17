@@ -134,7 +134,6 @@ for i = 1: size(TableOfLinks,1)
     Channel{i} = ['S',num2str(TableOfLinks{i,1}), 'D',num2str(TableOfLinks{i,2}),'-', TableOfLinks{i,3}];
 end
 
-ChannelInfo = Channel';
 %% Pulling all together
 
 Run1=[ClippedData1';Labels'];
@@ -157,4 +156,4 @@ title('Preprocessed hbo data')
 
 
 %%  Save Data
-save('DatasetENEEB.mat', 'Run1', 'Run2', 'Run3', 'ChannelInfo')
+save('DatasetENEEB.mat', 'Run1', 'Run2', 'Run3', ')

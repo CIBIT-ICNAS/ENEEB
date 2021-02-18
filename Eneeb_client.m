@@ -78,9 +78,7 @@ classdef Eneeb_client < handle
 
             
             while (obj.input_stream.available<datapoint_size)
-                
-                   
-                pause(.1);
+                pause(.1); % to confirm
             end
             
             bytes_available = obj.input_stream.available;

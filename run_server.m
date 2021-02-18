@@ -16,7 +16,7 @@ server.create();
 
 bytearray=[];
 
-for i=1:100 % size(Run1,1)
+for i=1:50 % size(Run1,1)
 
     % float2byte datatype
     for f=1:length(Run1(i,:))

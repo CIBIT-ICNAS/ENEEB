@@ -43,12 +43,7 @@ while 1
         drawnow
 
         m=m+1;
-    end
-
-
-   
-
-    
+    end   
     
 end
 

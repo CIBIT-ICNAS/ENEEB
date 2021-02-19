@@ -9,7 +9,7 @@ classdef Eneeb_server < handle
         port
         
         % set to -1 for infinite.
-        max_retries = 20 
+        max_retries=10 
         
         % default message.
         message='hello world'
@@ -47,14 +47,18 @@ classdef Eneeb_server < handle
                     
                     fprintf(1, ['[SERVER: ] Try %d waiting for client to connect to this ' ...
                         'host on port : %d\n'], retry, obj.port);
+                    
                     % wait for 1 second for client to connect server socket
                     obj.server_socket=ServerSocket(obj.port);
                     obj.server_socket.setSoTimeout(1000);
+                    
                     obj.output_socket=obj.server_socket.accept;
-                    fprintf(1, '[SERVER: ] Client connected\n');
+                    
+                    
                     
                     obj.output_stream=obj.output_socket.getOutputStream;
                     obj.data_output_stream=DataOutputStream(obj.output_stream);
+                    fprintf(1, '[SERVER: ] Client connected\n');
                     
                     break;
                     
@@ -67,7 +71,7 @@ classdef Eneeb_server < handle
                     end
                     
                     % pause before retrying
-                    pause(.1);
+                    pause(1);
                 end
                 
             end
@@ -77,7 +81,7 @@ classdef Eneeb_server < handle
             % output the data over the DataOutputStream
             % Convert to stream of bytes
             fprintf(1, '[SERVER: ] Writing %d bytes\n', length(message))
-            obj.data_output_stream.writeBytes(char(message));
+            obj.data_output_stream.write(message);
             obj.data_output_stream.flush;
         end
         

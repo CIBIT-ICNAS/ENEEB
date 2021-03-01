@@ -1,6 +1,24 @@
-% Init server side.
-
-% class SERVER
+%ENEEB server class.
+%   contructor:
+%   [obj] = Eneeb_server(HOST, PORT) creates a Eneeb_server object in the
+%   HOST ip address and port PORT
+%
+%   Eneeb_server has 3 functions:
+%       initialize(OBJ) initializes the server in the OBJ.host and port
+%       OBJ.port and waits for a client to connect.
+%
+%       sendmessage(OBJ, MESSAGE) send a message with the variable MESSAGE
+%       as a bytestream.
+%
+%       close(OBJ) closes the OBJ server connection.
+%
+%   Example:
+%
+%       server=Eneeb_server(host, port);
+%       server.create();
+%       server.sendmessage('Hello World');
+%       server.close('');
+%
 
 classdef Eneeb_server < handle
     
@@ -29,7 +47,7 @@ classdef Eneeb_server < handle
         end
         
         % create Eneeb_server.
-        function create(obj)
+        function initialize(obj)
             import java.net.ServerSocket
             import java.io.*
             

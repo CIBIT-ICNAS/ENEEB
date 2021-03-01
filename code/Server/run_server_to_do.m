@@ -1,15 +1,19 @@
-% Load data.
-load('DatasetENEEB.mat')
+
+%% Initialize server
 
 % Set vars.
 host='localhost';
 port=3000;
 
-% Create server.
-server=Eneeb_server(host, port);
-server.initialize();
-
 bytearray=[];
+
+%% [TODO:] CREATE server.
+% hint: help Eneeb_server
+% Create OBJ server and initialize.
+%server=
+% server.
+%%
+
 
 for i=1:50 % size(Run1,1)
 
@@ -18,6 +22,7 @@ for i=1:50 % size(Run1,1)
         bytearray=[bytearray typecast(Run1(i,f),'uint8')];
     end
     
+    % [TODO:] SEND MESSAGE.
     % send message through server
     server.sendmessage(bytearray);
     pause(.5)
@@ -25,6 +30,7 @@ for i=1:50 % size(Run1,1)
     bytearray=[];
 end
 
+% [TODO:] SEND MESSAGE informing that run ended.
 server.sendmessage(zeros(1,328));
 
 % Close server.

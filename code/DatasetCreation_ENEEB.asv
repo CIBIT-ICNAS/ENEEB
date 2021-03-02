@@ -150,12 +150,11 @@ title('Raw WL data')
 
 subplot(3,1,2)
 plot (InitialData2(:,6))
-ylabel('[\mu mol/L]')
+ylabel('\Delta \mu A for \lambda 1')
 title('Non preprocessed hbo data')
 
 subplot(3,1,3)
 plot(ClippedData2(:,7))
-ylabel('[\mu mol/L]')
 title('Preprocessed hbo data')
 
 

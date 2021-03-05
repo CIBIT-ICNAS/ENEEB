@@ -1,31 +1,45 @@
+%% Clean everything before we start.
+clear all, 
+close all, 
+
+%%
 % Load data.
+addpath('data')
 load('DatasetENEEB.mat')
 
 % Set vars.
 host='localhost';
 port=3000;
+bytearray=[];
 
 % Create server.
 server=Eneeb_server(host, port);
-server.initialize();
+connected=server.initialize();
 
-bytearray=[];
-
-for i=1:50 % size(Run1,1)
-
-    % float2byte datatype
-    for f=1:length(Run1(i,:))
-        bytearray=[bytearray typecast(Run1(i,f),'uint8')];
+% If connection was created, start sending data.
+if connected
+    
+    % simulate data acquisition I/O.
+    for i=1:200 % size(Run1,1)
+        
+        % float2byte datatype.
+        for f=1:length(TRAIN(:,i))
+            bytearray=[bytearray typecast(TRAIN(f,i),'uint8')];
+        end
+        
+        % send message through server
+        server.sendmessage(bytearray);
+        pause(.25)
+        
+        bytearray=[];
+        
+        fprintf('[SERVER: ] Sending sample number %i \n', i);
     end
     
-    % send message through server
-    server.sendmessage(bytearray);
-    pause(.5)
+    server.sendmessage(zeros(1,328));
+    fprintf('[SERVER: ] Last sample sent.');
+
     
-    bytearray=[];
+    % Close server.
+    server.close();
 end
-
-server.sendmessage(zeros(1,328));
-
-% Close server.
-server.close();

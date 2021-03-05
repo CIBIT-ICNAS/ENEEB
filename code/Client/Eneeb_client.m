@@ -25,7 +25,8 @@ classdef Eneeb_client < handle
         end
         
         % create Eneeb_client.
-        function create(obj)
+        function [connected]=connect(obj)
+            connected=0;
             
             import java.net.Socket
             import java.io.*
@@ -51,6 +52,7 @@ classdef Eneeb_client < handle
                     obj.data_input_stream = DataInputStream(obj.input_stream);
                     
                     fprintf(1, '[CLIENT: ] Connected to server\n');
+                    connected=1;
                     
                     break;
                     

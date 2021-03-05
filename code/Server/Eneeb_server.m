@@ -47,9 +47,11 @@ classdef Eneeb_server < handle
         end
         
         % create Eneeb_server.
-        function initialize(obj)
+        function connected=initialize(obj)
             import java.net.ServerSocket
             import java.io.*
+            
+            connected=0;
             
             retry= 0;
             obj.server_socket  = [];
@@ -77,6 +79,7 @@ classdef Eneeb_server < handle
                     obj.output_stream=obj.output_socket.getOutputStream;
                     obj.data_output_stream=DataOutputStream(obj.output_stream);
                     fprintf(1, '[SERVER: ] Client connected\n');
+                    connected=1;
                     
                     break;
                     
@@ -84,10 +87,7 @@ classdef Eneeb_server < handle
                     if ~isempty(obj.server_socket)
                         obj.server_socket.close
                     end
-                    if ~isempty(obj.output_socket)
-                        obj.output_socket.close
-                    end
-                    
+
                     % pause before retrying
                     pause(1);
                 end

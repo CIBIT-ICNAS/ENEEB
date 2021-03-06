@@ -9,29 +9,38 @@ bytearray=[];
 
 %% [TODO:] CREATE server.
 % hint: help Eneeb_server
+
 % Create OBJ server and initialize.
-%server=
+% server=
 % server.
 %%
 
-
-for i=1:50 % size(Run1,1)
+for i=1:size(TEST,1)
 
     % float2byte datatype
-    for f=1:length(Run1(i,:))
-        bytearray=[bytearray typecast(Run1(i,f),'uint8')];
+    for f=1:length(TEST(i,:))
+        bytearray=[bytearray typecast(TEST(i,f),'uint8')];
     end
     
-    % [TODO:] SEND MESSAGE.
-    % send message through server
-    server.sendmessage(bytearray);
-    pause(.5)
+    % bytearray size = 8 (bytes per sample) * 41 elements - need to send
+    % 328 bytes per sample
+    
+    %% [TODO:] SEND MESSAGE (send message through server)
+    % hint: help Eneeb_server
+    
+    % server.
+    %%
+    
+    pause(.25)
     
     bytearray=[];
 end
 
-% [TODO:] SEND MESSAGE informing that run ended.
-server.sendmessage(zeros(1,328));
+%% [TODO:] SEND MESSAGE informing that run ended.
+% hint: help zeros, Eneeb_server
+
+% server.;
+%%
 
 % Close server.
 server.close();

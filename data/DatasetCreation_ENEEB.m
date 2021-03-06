@@ -1,11 +1,12 @@
 %% This scrip is designed to change stim info 
 clear all; clc;
 % Change path folder and subfolders of Nirs Toolbox
-addpath(genpath('C:\Users\User\Documents\GitHub\nirs-toolbox'))
+% addpath(genpath('C:\Users\User\Documents\GitHub\nirs-toolbox'))
+addpath(genpath('/Users/home/Documents/MATLAB/toolbox/huppertt-nirs-toolbox-ccf8635a411c'))
 
 %% Load fNIRS data
 % Define path for data folder
-rootDir = 'C:\Users\User\Documents\GitHub\ENEEB\data\TappingLeftRight';
+rootDir = '/Users/home/Documents/GitHub/ENEEB/data/TappingLeftRight';
 raw = nirs.io.loadDirectory(fullfile(rootDir), {'subjects', 'runs'});
 
 job = nirs.modules.RenameStims();
@@ -77,6 +78,9 @@ hb = job.run(rawChanged);
 job = nirs.modules.BaselinePCAFilter; % Default tune = 5
 hb1 = job.run(hb);
 
+
+%%
+
 %'Remove Trend & Motion w/ Wavelets'
 job = nirs.modules.WaveletFilter; 
 hb2 = job.run(hb1);
@@ -110,6 +114,11 @@ ClippedData1 = hb3(1).data(IDxi(1):IDXf(1)-1,:);
 ClippedData2 = hb3(2).data(IDxi(2):IDXf(2)-1,:);
 ClippedData3 = hb3(3).data(IDxi(3):IDXf(3)-1,:);
 
+
+ClippedData1 = hb2(1).data(IDxi(1):IDXf(1)-1,:);
+ClippedData2 = hb2(2).data(IDxi(2):IDXf(2)-1,:);
+ClippedData3 = hb2(3).data(IDxi(3):IDXf(3)-1,:);
+
 InitialData1 = hb(1).data(IDxi(1):IDXf(1)-1,:);
 InitialData2 = hb(2).data(IDxi(1):IDXf(1)-1,:);
 InitialData3 = hb(3).data(IDxi(1):IDXf(1)-1,:);
@@ -142,22 +151,25 @@ Run2=[ClippedData2';Labels'];
 Run3=[ClippedData3';Labels'];
 
 %% Plot figures of different preprocessing stages
+
+chan_idx=2;
+
 figure;
 subplot(3,1,1)
-plot (RawWL2(:,6))
+plot (RawWL2(:,chan_idx))
 ylabel('\Delta \mu A for \lambda 1')
 title('Raw WL data')
 
 subplot(3,1,2)
-plot (InitialData2(:,6))
+plot (InitialData2(:,chan_idx))
 ylabel('[\mu mol/L]')
 title('Non preprocessed hbo data')
 
 subplot(3,1,3)
-plot(ClippedData2(:,7))
+plot(ClippedData2(:,chan_idx))
 ylabel('[\mu mol/L]')
 title('Preprocessed hbo data')
 
 
 %%  Save Data
-save('DatasetENEEB.mat', 'Run1', 'Run2', 'Run3', 'ChannelInfo')
+save('Dataset_unfiltered.mat', 'Run1', 'Run2', 'Run3', 'ChannelInfo')

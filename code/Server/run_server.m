@@ -20,7 +20,7 @@ connected=server.initialize();
 if connected
     
     % simulate data acquisition I/O.
-    for i=1:200 % size(Run1,1)
+    for i=1:size(Run1,1)
         
         % float2byte datatype.
         for f=1:length(TRAIN(:,i))

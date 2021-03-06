@@ -231,6 +231,7 @@ if connected
         end
         
         accuracy = sum(yfit==datapoints(:,41)')/numel(yfit) * 100;
+        fprintf('The classifier was correct %.3f%% of times.\n', accuracy)
         
     catch ME
         client.close()
